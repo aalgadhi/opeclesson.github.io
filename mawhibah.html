@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة موهبة — درس أوبك</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --emerald: #1a6b4a;
+  --emerald-light: #22895f;
+  --emerald-glow: #2ecc8a;
+  --gold: #c9973a;
+  --gold-light: #e8b855;
+  --cream: #faf6ef;
+  --cream-dark: #f0e8d8;
+  --ink: #1a1a2e;
+  --ink-mid: #2d3561;
+  --text: #2c2c2c;
+  --text-muted: #6b7280;
+  --white: #ffffff;
+  --correct: #16a34a;
+  --wrong: #dc2626;
+  --border: rgba(201,151,58,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  min-height: 100vh;
+}
+
+/* === DECORATIVE PATTERN === */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9973a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none; z-index:0;
+}
+
+/* === HEADER === */
+header {
+  position:relative; z-index:10;
+  background: linear-gradient(135deg, var(--emerald) 0%, #0f4a32 50%, var(--ink) 100%);
+  padding: 0;
+  overflow: hidden;
+}
+header::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0;
+  height:4px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+
+.header-inner {
+  max-width:1100px; margin:0 auto;
+  padding:40px 40px 50px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:30px;
+}
+
+.logo-area { }
+.logo-badge {
+  display:inline-block;
+  background: rgba(201,151,58,0.15);
+  border:1px solid rgba(201,151,58,0.4);
+  color:var(--gold-light);
+  font-size:0.75rem; font-weight:700; letter-spacing:3px;
+  padding:6px 16px; border-radius:50px;
+  margin-bottom:12px;
+  text-transform:uppercase;
+}
+.logo-title {
+  font-family:'Cairo', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight:900; color:#fff;
+  line-height:1; letter-spacing:-1px;
+}
+.logo-title span { color:var(--gold-light); }
+.logo-sub {
+  font-size:1rem; color:rgba(255,255,255,0.6);
+  margin-top:8px; font-weight:400;
+}
+
+.header-stats {
+  display:flex; gap:24px;
+}
+.hstat {
+  text-align:center;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:14px; padding:16px 22px;
+}
+.hstat-num {
+  font-family:'Cairo', sans-serif;
+  font-size:1.8rem; font-weight:900; color:var(--gold-light);
+  line-height:1;
+}
+.hstat-label { font-size:0.78rem; color:rgba(255,255,255,0.5); margin-top:4px; }
+
+/* === TABS NAV === */
+.tabs-nav {
+  position:relative; z-index:10;
+  background:#fff;
+  border-bottom:2px solid var(--cream-dark);
+  box-shadow:0 2px 20px rgba(0,0,0,0.06);
+}
+.tabs-inner {
+  max-width:1100px; margin:0 auto;
+  display:flex; padding:0 40px;
+}
+.tab-btn {
+  padding:18px 28px;
+  background:none; border:none;
+  font-family:'Tajawal',sans-serif;
+  font-size:0.95rem; font-weight:600;
+  color:var(--text-muted);
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  margin-bottom:-2px;
+  transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.tab-btn:hover { color:var(--emerald); }
+.tab-btn.active {
+  color:var(--emerald);
+  border-bottom-color:var(--emerald);
+}
+
+/* === MAIN === */
+main {
+  position:relative; z-index:1;
+  max-width:1100px; margin:0 auto;
+  padding:40px 40px 80px;
+}
+
+/* === SECTION HEADER === */
+.sec-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:32px;
+}
+.sec-title {
+  font-family:'Cairo',sans-serif;
+  font-size:1.5rem; font-weight:900;
+  color:var(--ink);
+  display:flex; align-items:center; gap:10px;
+}
+.sec-title::before {
+  content:'';
+  width:5px; height:28px;
+  background:linear-gradient(to bottom, var(--gold), var(--emerald));
+  border-radius:3px; flex-shrink:0;
+}
+
+/* === QUIZ CARD === */
+.quiz-card {
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:36px;
+  margin-bottom:20px;
+  box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  transition:box-shadow 0.3s;
+  position:relative;
+  overflow:hidden;
+}
+.quiz-card::before {
+  content:'';
+  position:absolute; top:0; right:0;
+  width:100px; height:100px;
+  background:radial-gradient(circle at top right, rgba(201,151,58,0.06), transparent 70%);
+}
+.quiz-card:hover { box-shadow:0 6px 32px rgba(0,0,0,0.1); }
+
+.q-meta {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px;
+}
+.q-num {
+  font-size:0.75rem; font-weight:700; letter-spacing:3px;
+  color:var(--gold); text-transform:uppercase;
+}
+.q-type-badge {
+  font-size:0.72rem; font-weight:700;
+  padding:4px 12px; border-radius:50px;
+  background:rgba(26,107,74,0.08); color:var(--emerald);
+  border:1px solid rgba(26,107,74,0.2);
+}
+
+.q-text {
+  font-size:1.1rem; font-weight:600;
+  line-height:1.7; color:var(--ink);
+  margin-bottom:24px;
+}
+
+/* MCQ Options */
+.options-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.option-item {
+  display:flex; align-items:center; gap:14px;
+  padding:14px 18px;
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all 0.2s;
+  font-size:0.97rem;
+  user-select:none;
+}
+.option-item:hover:not(.disabled) {
+  border-color:var(--emerald);
+  background:rgba(26,107,74,0.04);
+  transform:translateX(-3px);
+}
+.option-item.selected { border-color:var(--ink-mid); background:rgba(45,53,97,0.05); }
+.option-item.correct { border-color:var(--correct)!important; background:rgba(22,163,74,0.07)!important; color:var(--correct); font-weight:700; }
+.option-item.wrong { border-color:var(--wrong)!important; background:rgba(220,38,38,0.06)!important; color:var(--wrong); font-weight:700; }
+.option-item.disabled { cursor:default; }
+
+.option-letter {
+  width:32px; height:32px; border-radius:8px;
+  background:rgba(201,151,58,0.1); border:1px solid rgba(201,151,58,0.25);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:0.85rem; color:var(--gold);
+  flex-shrink:0;
+}
+.option-item.correct .option-letter { background:rgba(22,163,74,0.15); border-color:var(--correct); color:var(--correct); }
+.option-item.wrong .option-letter { background:rgba(220,38,38,0.1); border-color:var(--wrong); color:var(--wrong); }
+
+/* TF Options */
+.tf-options { display:flex; gap:14px; }
+.tf-btn {
+  flex:1; padding:16px;
+  border:1.5px solid #e5e7eb; border-radius:12px;
+  background:none; font-family:'Tajawal',sans-serif;
+  font-size:1rem; font-weight:700; cursor:pointer;
+  transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.tf-btn:hover:not(.disabled) { border-color:var(--emerald); background:rgba(26,107,74,0.04); }
+.tf-btn.selected { border-color:var(--ink-mid); background:rgba(45,53,97,0.05); }
+.tf-btn.correct { border-color:var(--correct)!important; background:rgba(22,163,74,0.07)!important; color:var(--correct)!important; }
+.tf-btn.wrong { border-color:var(--wrong)!important; background:rgba(220,38,38,0.06)!important; color:var(--wrong)!important; }
+.tf-btn.disabled { cursor:default; }
+
+/* Match */
+.match-container { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.match-col-title { font-size:0.8rem; font-weight:700; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.match-items { display:flex; flex-direction:column; gap:8px; }
+.match-item {
+  padding:12px 16px; border-radius:10px;
+  border:1.5px solid #e5e7eb; background:#fff;
+  font-size:0.92rem; font-weight:600; cursor:pointer;
+  transition:all 0.2s; user-select:none;
+  display:flex; align-items:center; gap:10px;
+}
+.match-item:hover:not(.matched):not(.disabled) { border-color:var(--gold); background:rgba(201,151,58,0.04); }
+.match-item.selected-left { border-color:var(--emerald); background:rgba(26,107,74,0.06); }
+.match-item.matched-correct { border-color:var(--correct); background:rgba(22,163,74,0.07); color:var(--correct); }
+.match-item.matched-wrong { border-color:var(--wrong); background:rgba(220,38,38,0.06); color:var(--wrong); }
+.match-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:#e5e7eb; flex-shrink:0; transition:background 0.2s;
+}
+.match-item.selected-left .match-dot { background:var(--emerald); }
+.match-item.matched-correct .match-dot { background:var(--correct); }
+.match-item.matched-wrong .match-dot { background:var(--wrong); }
+
+/* Answer feedback */
+.answer-feedback {
+  display:none; margin-top:16px;
+  padding:14px 18px; border-radius:10px;
+  font-size:0.92rem; font-weight:600; line-height:1.6;
+}
+.answer-feedback.show { display:flex; align-items:flex-start; gap:10px; }
+.answer-feedback.correct-fb { background:rgba(22,163,74,0.08); color:var(--correct); border:1px solid rgba(22,163,74,0.2); }
+.answer-feedback.wrong-fb { background:rgba(220,38,38,0.07); color:#b91c1c; border:1px solid rgba(220,38,38,0.2); }
+
+/* === SUBMIT BTN === */
+.submit-section { text-align:center; margin-top:40px; }
+.submit-btn {
+  background:linear-gradient(135deg, var(--emerald), #0f4a32);
+  color:#fff; border:none;
+  padding:18px 60px; border-radius:12px;
+  font-family:'Cairo',sans-serif; font-size:1.1rem; font-weight:800;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow:0 4px 20px rgba(26,107,74,0.3);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.submit-btn:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(26,107,74,0.4);
+}
+.submit-btn:disabled { opacity:0.5; cursor:default; transform:none; }
+
+/* === RESULT CARD === */
+.result-card {
+  display:none;
+  background:linear-gradient(135deg, var(--emerald), #0f4a32);
+  border-radius:24px; padding:48px;
+  text-align:center; color:#fff;
+  margin-bottom:40px;
+  box-shadow:0 12px 48px rgba(26,107,74,0.25);
+}
+.result-card.show { display:block; animation:fadeInUp 0.5s ease; }
+.result-score {
+  font-family:'Cairo',sans-serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight:900; color:var(--gold-light);
+  line-height:1;
+}
+.result-label { font-size:1.1rem; opacity:0.8; margin:8px 0 24px; }
+.result-msg { font-size:1.2rem; font-weight:700; margin-bottom:28px; }
+.result-breakdown {
+  display:flex; gap:20px; justify-content:center; flex-wrap:wrap;
+  margin-bottom:32px;
+}
+.rb-item {
+  background:rgba(255,255,255,0.1); border-radius:12px;
+  padding:16px 24px; text-align:center;
+}
+.rb-num { font-family:'Cairo',sans-serif; font-size:2rem; font-weight:900; }
+.rb-label { font-size:0.8rem; opacity:0.7; margin-top:4px; }
+.retry-btn {
+  background:var(--gold); color:var(--ink);
+  border:none; padding:14px 40px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:800;
+  cursor:pointer; transition:all 0.3s;
+}
+.retry-btn:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* === EDIT PANEL === */
+.edit-panel { }
+.edit-instructions {
+  background:rgba(201,151,58,0.08);
+  border:1px solid rgba(201,151,58,0.25);
+  border-radius:14px; padding:20px 24px;
+  margin-bottom:28px;
+  font-size:0.9rem; color:var(--text-muted); line-height:1.7;
+}
+.edit-instructions strong { color:var(--gold); }
+
+.edit-card {
+  background:#fff; border:1px solid var(--border);
+  border-radius:16px; padding:28px; margin-bottom:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+}
+.edit-card-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:20px;
+}
+.edit-card-title {
+  font-size:0.9rem; font-weight:700; color:var(--text-muted);
+  letter-spacing:1px;
+}
+.edit-type-select {
+  background:rgba(26,107,74,0.06); border:1px solid rgba(26,107,74,0.2);
+  color:var(--emerald); font-family:'Tajawal',sans-serif;
+  font-size:0.85rem; font-weight:700; padding:6px 12px; border-radius:8px;
+  outline:none; cursor:pointer;
+}
+
+.edit-input, .edit-textarea {
+  width:100%; background:#fafafa;
+  border:1.5px solid #e5e7eb; border-radius:10px;
+  padding:12px 16px; font-family:'Tajawal',sans-serif;
+  font-size:0.95rem; color:var(--text); outline:none;
+  transition:border-color 0.2s; resize:vertical; text-align:right;
+  line-height:1.6;
+}
+.edit-input:focus, .edit-textarea:focus { border-color:var(--emerald); }
+
+.edit-options { margin-top:16px; display:flex; flex-direction:column; gap:10px; }
+.edit-option-row {
+  display:flex; align-items:center; gap:10px;
+}
+.edit-option-row input[type="radio"] { accent-color:var(--emerald); width:16px; height:16px; cursor:pointer; }
+.edit-option-input {
+  flex:1; background:#fafafa;
+  border:1.5px solid #e5e7eb; border-radius:8px;
+  padding:10px 14px; font-family:'Tajawal',sans-serif;
+  font-size:0.92rem; color:var(--text); outline:none;
+  transition:border-color 0.2s; text-align:right;
+}
+.edit-option-input:focus { border-color:var(--emerald); }
+.correct-label { font-size:0.75rem; color:var(--correct); font-weight:700; white-space:nowrap; }
+
+.edit-actions { display:flex; gap:10px; margin-top:20px; }
+.save-btn {
+  background:var(--emerald); color:#fff;
+  border:none; padding:10px 24px; border-radius:8px;
+  font-family:'Tajawal',sans-serif; font-size:0.9rem; font-weight:700;
+  cursor:pointer; transition:all 0.2s;
+}
+.save-btn:hover { background:var(--emerald-light); }
+.delete-btn {
+  background:rgba(220,38,38,0.08); color:var(--wrong);
+  border:1px solid rgba(220,38,38,0.2); padding:10px 20px; border-radius:8px;
+  font-family:'Tajawal',sans-serif; font-size:0.9rem; font-weight:700;
+  cursor:pointer; transition:all 0.2s;
+}
+.delete-btn:hover { background:rgba(220,38,38,0.15); }
+
+.add-question-btn {
+  width:100%; padding:18px;
+  border:2px dashed rgba(201,151,58,0.35);
+  border-radius:16px; background:rgba(201,151,58,0.04);
+  color:var(--gold); font-family:'Cairo',sans-serif;
+  font-size:1rem; font-weight:700; cursor:pointer;
+  transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.add-question-btn:hover { border-color:var(--gold); background:rgba(201,151,58,0.08); }
+
+.apply-btn {
+  background:linear-gradient(135deg, var(--emerald), #0f4a32);
+  color:#fff; border:none; padding:16px 48px; border-radius:12px;
+  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:800;
+  cursor:pointer; transition:all 0.3s; box-shadow:0 4px 20px rgba(26,107,74,0.25);
+  display:block; margin:32px auto 0;
+}
+.apply-btn:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(26,107,74,0.35); }
+
+/* === TABS PANELS === */
+.tab-panel { display:none; }
+.tab-panel.active { display:block; animation:fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* Progress bar */
+.progress-bar-wrap {
+  background:#e5e7eb; border-radius:50px;
+  height:6px; margin-bottom:32px; overflow:hidden;
+}
+.progress-bar-fill {
+  height:100%; border-radius:50px;
+  background:linear-gradient(90deg, var(--emerald), var(--gold));
+  transition:width 0.4s ease;
+}
+
+/* Notification */
+.notif {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--ink); color:#fff; padding:14px 28px; border-radius:12px;
+  font-size:0.95rem; font-weight:600; z-index:1000;
+  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  white-space:nowrap;
+}
+.notif.show { transform:translateX(-50%) translateY(0); }
+
+
+/* ======= ACTIVITIES ======= */
+.act-select-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:24px;
+  max-width:800px; margin:0 auto;
+}
+@media(max-width:600px){ .act-select-grid{grid-template-columns:1fr;} }
+
+.act-select-card {
+  background:#fff; border:2px solid var(--border);
+  border-radius:20px; padding:36px 28px; text-align:center;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+.act-select-card:hover {
+  transform:translateY(-6px);
+  border-color:var(--gold);
+  box-shadow:0 12px 40px rgba(201,151,58,0.2);
+}
+.act-pixel-icon { font-size:3rem; margin-bottom:16px; }
+.act-select-title {
+  font-family:'Cairo',sans-serif; font-size:1.2rem; font-weight:900;
+  color:var(--ink); margin-bottom:10px;
+}
+.act-select-desc { font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-bottom:14px; }
+.act-select-count {
+  display:inline-block; background:rgba(26,107,74,0.08);
+  color:var(--emerald); border:1px solid rgba(26,107,74,0.2);
+  font-size:0.8rem; font-weight:700; padding:4px 14px; border-radius:50px; margin-bottom:16px;
+}
+.act-start-btn {
+  background:linear-gradient(135deg, var(--emerald), #0f4a32);
+  color:#fff; border:none; padding:12px 28px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800;
+  cursor:pointer; transition:all 0.2s;
+  display:block; width:100%; margin-top:4px;
+}
+.act-start-btn:hover { opacity:0.9; transform:scale(1.02); }
+
+/* Pixel game area */
+.pixel-sky {
+  background: linear-gradient(180deg, #5cc8f0 0%, #9ae0f5 60%, #c5eefc 100%);
+  border-radius:16px 16px 0 0;
+  min-height:80px; position:relative; overflow:hidden;
+  border:3px solid #333; border-bottom:none;
+}
+.pixel-cloud {
+  position:absolute; background:#fff; border-radius:4px;
+  box-shadow:0 0 0 3px #ddd;
+}
+.cloud1 { width:80px; height:28px; top:18px; right:15%; animation:cloudFloat 8s linear infinite; }
+.cloud1::before { content:''; position:absolute; width:40px; height:20px; background:#fff; border-radius:4px; top:-12px; right:15px; box-shadow:0 0 0 3px #ddd; }
+.cloud2 { width:60px; height:22px; top:28px; left:20%; animation:cloudFloat 12s linear infinite reverse; }
+.cloud2::before { content:''; position:absolute; width:30px; height:16px; background:#fff; border-radius:4px; top:-10px; right:10px; box-shadow:0 0 0 3px #ddd; }
+@keyframes cloudFloat { from{transform:translateX(0)} to{transform:translateX(20px)} }
+
+.pixel-pipe {
+  position:absolute; bottom:0;
+  width:36px; background:#3a9e3a;
+  border:3px solid #27732a; border-bottom:none;
+  height:55px;
+}
+.pixel-pipe::before {
+  content:''; position:absolute; top:-10px; left:-6px; right:-6px;
+  height:18px; background:#3a9e3a; border:3px solid #27732a; border-radius:2px;
+}
+.pipe-left { left:40px; }
+.pipe-right { right:40px; }
+
+.pixel-ground {
+  background:repeating-linear-gradient(90deg, #5d9e3a 0px, #5d9e3a 20px, #4a8a2a 20px, #4a8a2a 40px);
+  height:28px; border:3px solid #27732a; border-top:none;
+  border-radius:0 0 16px 16px;
+}
+
+.act-game-inner {
+  background:rgba(92,200,240,0.15);
+  border-right:3px solid #333; border-left:3px solid #333;
+  padding:24px 32px;
+}
+
+.act-game-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px;
+}
+.back-btn {
+  background:rgba(255,255,255,0.7); border:2px solid #333;
+  padding:8px 16px; border-radius:8px;
+  font-family:'Tajawal',sans-serif; font-size:0.9rem; font-weight:700;
+  cursor:pointer; transition:all 0.2s;
+  image-rendering:pixelated;
+}
+.back-btn:hover { background:#fff; }
+.act-game-title {
+  font-family:'Cairo',sans-serif; font-size:1.1rem; font-weight:900;
+  color:var(--ink);
+}
+.act-game-score {
+  background:var(--ink); color:var(--gold-light);
+  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:900;
+  padding:6px 18px; border-radius:8px; border:2px solid var(--gold);
+}
+
+.act-progress-bar {
+  background:#ddd; border-radius:4px; height:8px;
+  margin-bottom:24px; border:2px solid #aaa; overflow:hidden;
+}
+.act-progress-fill {
+  height:100%; background:linear-gradient(90deg, #3a9e3a, #e8b855);
+  transition:width 0.4s; border-radius:2px;
+}
+
+/* Pixel board */
+.pixel-board {
+  background:rgba(92,200,240,0.35);
+  border:4px solid #1a1a1a;
+  border-radius:12px; padding:32px 28px;
+  text-align:center;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+  max-width:700px; margin:0 auto;
+  font-family:'Cairo',sans-serif;
+}
+.pixel-board-title {
+  font-size:1rem; font-weight:900; color:var(--gold);
+  letter-spacing:2px; margin-bottom:20px;
+  text-shadow:1px 1px 0 rgba(0,0,0,0.3);
+}
+
+/* Missing letters */
+.missing-clue {
+  font-size:0.95rem; color:#1a1a1a; line-height:1.7;
+  margin-bottom:20px; background:rgba(255,255,255,0.6);
+  border-radius:8px; padding:12px 16px; border:2px solid #ccc;
+}
+.missing-word {
+  font-family:'Cairo',sans-serif; font-size:2rem; font-weight:900;
+  letter-spacing:6px; color:var(--ink); margin-bottom:24px;
+  direction:rtl;
+}
+.missing-blank { color:var(--gold); border-bottom:3px solid var(--gold); padding:0 4px; }
+.missing-options {
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+}
+.missing-opt-btn {
+  background:#fff; border:3px solid #333;
+  width:56px; height:56px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:900;
+  cursor:pointer; transition:all 0.15s;
+  box-shadow:3px 3px 0 #333;
+}
+.missing-opt-btn:hover:not(:disabled) {
+  background:var(--gold-light); transform:translate(-1px,-1px);
+  box-shadow:4px 4px 0 #333;
+}
+.missing-opt-btn.correct-pick { background:#86efac; border-color:var(--correct); color:var(--correct); }
+.missing-opt-btn.wrong-pick { background:#fca5a5; border-color:var(--wrong); color:var(--wrong); }
+
+/* Timer */
+.cw-timer-box {
+  display:flex; align-items:center; gap:6px;
+  background: rgba(26,107,74,0.12);
+  border: 2px solid rgba(26,107,74,0.3);
+  border-radius: 10px; padding: 6px 14px;
+  transition: all 0.3s;
+}
+.cw-timer-icon { font-size:1.1rem; }
+.cw-timer-num {
+  font-family:'Cairo',sans-serif; font-size:1.2rem; font-weight:900;
+  color: var(--emerald); letter-spacing:2px; min-width:42px;
+}
+@keyframes timerPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+/* === INTERACTIVE CROSSWORD GRID === */
+.cw-grid-wrapper {
+  background: rgba(255,255,255,0.85);
+  border: 3px solid #333;
+  border-radius: 14px;
+  padding: 16px;
+  max-width: 520px;
+  margin: 0 auto 0;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+.cw-grid-label {
+  font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700;
+  color: var(--emerald); text-align:center; margin-bottom:10px;
+  letter-spacing:0.5px;
+}
+.cw-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 3px;
+  direction: rtl;
+}
+.cw-cell {
+  width: 100%; aspect-ratio: 1;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  display: flex; align-items:center; justify-content:center;
+  font-family:'Cairo',sans-serif; font-size:clamp(0.75rem,2vw,1rem); font-weight:800;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  position: relative;
+}
+.cw-cell:hover { background: rgba(201,151,58,0.15); border-color: var(--gold); transform:scale(1.08); }
+.cw-cell.selected { background: var(--gold-light); border-color: var(--gold); color: var(--ink); transform:scale(1.08); box-shadow:0 0 0 2px var(--gold); }
+.cw-cell.correct-cell { background: #86efac !important; border-color: var(--correct) !important; color: var(--correct) !important; }
+.cw-cell.wrong-cell { background: #fca5a5 !important; border-color: var(--wrong) !important; color: var(--wrong) !important; }
+.cw-cell.revealed { background: #d1fae5; border-color: var(--correct); }
+.cw-cell.disabled { cursor: default; }
+.cw-cell.disabled:hover { transform:none; background:#fff; border-color:#ccc; }
+
+.cw-selected-display {
+  display: flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-top:12px; padding:10px 14px;
+  background: rgba(26,107,74,0.07); border-radius:8px;
+  border:1.5px solid rgba(26,107,74,0.2);
+  justify-content: center;
+}
+.cw-sel-label { font-size:0.82rem; color:var(--text-muted); font-weight:600; }
+.cw-sel-word {
+  font-family:'Cairo',sans-serif; font-size:1.1rem; font-weight:900;
+  color:var(--ink); letter-spacing:3px; direction:rtl;
+  min-width:60px; text-align:center;
+}
+.cw-clear-btn {
+  background:rgba(220,38,38,0.08); color:var(--wrong);
+  border:1.5px solid rgba(220,38,38,0.25); padding:5px 12px; border-radius:6px;
+  font-family:'Tajawal',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer;
+  transition:all 0.2s;
+}
+.cw-clear-btn:hover { background:rgba(220,38,38,0.15); }
+.cw-confirm-btn {
+  background:var(--emerald); color:#fff;
+  border:none; padding:5px 16px; border-radius:6px;
+  font-family:'Tajawal',sans-serif; font-size:0.85rem; font-weight:700; cursor:pointer;
+  transition:all 0.2s; border:2px solid #0f4a32;
+}
+.cw-confirm-btn:disabled { opacity:0.4; cursor:default; }
+.cw-confirm-btn:hover:not(:disabled) { background:var(--emerald-light); }
+
+/* Highlight hint for active question */
+.cw-cell.hint-cell { background:rgba(92,200,240,0.3) !important; border-color:#5cc8f0 !important; }
+
+@media(max-width:480px) { .cw-grid { gap:2px; } .cw-cell { font-size:0.7rem; border-width:1.5px; } }
+
+
+  font-size:0.75rem; font-weight:800; color:var(--gold); letter-spacing:3px;
+  text-transform:uppercase; margin-bottom:10px;
+}
+.cw-clue-text {
+  font-size:1.05rem; color:#1a1a1a; line-height:1.7;
+  margin-bottom:24px; background:rgba(255,255,255,0.6);
+  border-radius:8px; padding:12px 16px; border:2px solid #ccc;
+}
+.cw-options {
+  display:flex; flex-direction:column; gap:10px;
+  max-width:400px; margin:0 auto;
+}
+.cw-opt-btn {
+  background:#fff; border:2px solid #333;
+  padding:12px 20px; border-radius:10px;
+  font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:700;
+  cursor:pointer; transition:all 0.15s; text-align:right;
+  box-shadow:3px 3px 0 #aaa;
+  display:flex; align-items:center; gap:10px;
+}
+.cw-opt-btn:hover:not(:disabled) {
+  background:rgba(201,151,58,0.1); border-color:var(--gold);
+  transform:translateX(-3px);
+}
+.cw-opt-btn.correct-pick { background:#dcfce7; border-color:var(--correct); color:var(--correct); box-shadow:3px 3px 0 #16a34a; }
+.cw-opt-btn.wrong-pick { background:#fee2e2; border-color:var(--wrong); color:var(--wrong); box-shadow:3px 3px 0 #dc2626; }
+.cw-opt-letter {
+  width:28px; height:28px; border-radius:6px;
+  background:rgba(201,151,58,0.1); display:flex; align-items:center; justify-content:center;
+  font-size:0.8rem; font-weight:800; color:var(--gold); flex-shrink:0;
+}
+.cw-opt-btn.correct-pick .cw-opt-letter { background:rgba(22,163,74,0.15); color:var(--correct); }
+
+/* Feedback */
+.act-feedback {
+  margin-top:16px; padding:12px 18px;
+  border-radius:8px; font-size:0.95rem; font-weight:700;
+  display:none; border:2px solid transparent;
+}
+.act-feedback.show { display:block; }
+.act-feedback.good { background:#dcfce7; color:var(--correct); border-color:#86efac; }
+.act-feedback.bad { background:#fee2e2; color:var(--wrong); border-color:#fca5a5; }
+
+.act-nav-btns { text-align:center; margin-top:20px; }
+.act-next-btn {
+  background:var(--emerald); color:#fff;
+  border:3px solid #0f4a32; padding:12px 36px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:1rem; font-weight:800;
+  cursor:pointer; box-shadow:3px 3px 0 #0f4a32;
+  transition:all 0.15s;
+}
+.act-next-btn:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 #0f4a32; }
+
+/* Result */
+.pixel-result-board {
+  background:rgba(92,200,240,0.35); border:4px solid #1a1a1a;
+  border-radius:12px; padding:40px 28px; text-align:center;
+  box-shadow:4px 4px 0 rgba(0,0,0,0.25); max-width:500px; margin:0 auto;
+}
+.pixel-result-stars { font-size:2.5rem; margin-bottom:12px; }
+.pixel-result-score {
+  font-family:'Cairo',sans-serif; font-size:3.5rem; font-weight:900;
+  color:var(--gold-light); text-shadow:2px 2px 0 rgba(0,0,0,0.3);
+  margin-bottom:8px;
+}
+.pixel-result-msg {
+  font-size:1.1rem; font-weight:700; color:var(--ink); margin-bottom:28px;
+}
+.pixel-retry-btn {
+  background:var(--emerald); color:#fff;
+  border:3px solid #0f4a32; padding:12px 28px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:0.95rem; font-weight:800;
+  cursor:pointer; box-shadow:3px 3px 0 #0f4a32; margin:6px;
+  transition:all 0.15s;
+}
+.pixel-retry-btn:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 #0f4a32; }
+
+
+  .header-inner { flex-direction:column; padding:28px 24px 36px; }
+  .header-stats { flex-wrap:wrap; justify-content:center; }
+  main { padding:28px 20px 60px; }
+  .tabs-inner { padding:0 16px; overflow-x:auto; }
+  .tab-btn { padding:16px 18px; white-space:nowrap; font-size:0.88rem; }
+  .quiz-card { padding:24px 20px; }
+  .match-container { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- === HEADER === -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-badge">✦ منصة تعليمية</div>
+      <div class="logo-title">مو<span>هبة</span></div>
+      <div class="logo-sub">الدرس السابع عشر — منظمة الدول المصدرة للنفط (أوبك)</div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat"><div class="hstat-num" id="totalCount">18</div><div class="hstat-label">سؤال</div></div>
+      <div class="hstat"><div class="hstat-num" id="answeredCount">0</div><div class="hstat-label">تم الإجابة</div></div>
+      <div class="hstat"><div class="hstat-num" id="correctCount">0</div><div class="hstat-label">صحيح</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- === TABS NAV === -->
+<nav class="tabs-nav">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('quiz',this)">📝 حل الاختبار</button>
+    <button class="tab-btn" onclick="switchTab('activities',this)">🎮 الأنشطة</button>
+    <button class="tab-btn" onclick="switchTab('edit',this)">✏️ تعديل الأسئلة</button>
+  </div>
+</nav>
+
+<!-- === MAIN === -->
+<main>
+
+  <!-- QUIZ TAB -->
+  <div class="tab-panel active" id="panel-quiz">
+    <div class="result-card" id="resultCard">
+      <div class="result-score" id="resultScore">0/0</div>
+      <div class="result-label">نتيجتك النهائية</div>
+      <div class="result-msg" id="resultMsg">—</div>
+      <div class="result-breakdown">
+        <div class="rb-item"><div class="rb-num" id="rb-correct" style="color:#86efac">0</div><div class="rb-label">✅ صحيح</div></div>
+        <div class="rb-item"><div class="rb-num" id="rb-wrong" style="color:#fca5a5">0</div><div class="rb-label">❌ خطأ</div></div>
+        <div class="rb-item"><div class="rb-num" id="rb-pct">0%</div><div class="rb-label">نسبة النجاح</div></div>
+      </div>
+      <button class="retry-btn" onclick="retryQuiz()">🔄 أعد الاختبار</button>
+    </div>
+
+    <div class="sec-header">
+      <div class="sec-title">أسئلة الاختبار</div>
+    </div>
+
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+
+    <div id="quizContainer"></div>
+
+    <div class="submit-section">
+      <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">
+        <span>📊</span> إظهار النتيجة
+      </button>
+    </div>
+  </div>
+
+  <!-- ACTIVITIES TAB -->
+  <div class="tab-panel" id="panel-activities">
+    <!-- Activity selector screen -->
+    <div id="act-select-screen">
+      <div class="sec-header"><div class="sec-title">🎮 الأنشطة التعليمية</div></div>
+      <div class="act-select-grid">
+        <div class="act-select-card" onclick="startActivity('missing')">
+          <div class="act-pixel-icon">🔤</div>
+          <div class="act-select-title">توقع الحروف الناقصة</div>
+          <div class="act-select-desc">أكمل الكلمات الناقصة من الدرس باختيار الحروف الصحيحة</div>
+          <div class="act-select-count" id="missing-count">3 أسئلة</div>
+          <button class="act-start-btn">ابدأ النشاط ◀</button>
+        </div>
+        <div class="act-select-card" onclick="startActivity('crossword')">
+          <div class="act-pixel-icon">🔍</div>
+          <div class="act-select-title">الكلمات المتقاطعة</div>
+          <div class="act-select-desc">أجب عن الأسئلة واكتشف الكلمات المخفية من درس أوبك</div>
+          <div class="act-select-count" id="crossword-count">6 أسئلة</div>
+          <button class="act-start-btn">ابدأ النشاط ◀</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity game area -->
+    <div id="act-game-area" style="display:none">
+      <!-- Pixel sky background -->
+      <div class="pixel-sky">
+        <div class="pixel-cloud cloud1"></div>
+        <div class="pixel-cloud cloud2"></div>
+        <div class="pixel-pipe pipe-left"></div>
+        <div class="pixel-pipe pipe-right"></div>
+      </div>
+
+      <div class="act-game-inner">
+        <div class="act-game-header">
+          <button class="back-btn" onclick="backToActSelect()">◀ رجوع</button>
+          <div class="act-game-title" id="actGameTitle">النشاط</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <!-- Timer -->
+            <div class="cw-timer-box" id="cwTimerBox" style="display:none">
+              <span class="cw-timer-icon">⏱</span>
+              <span class="cw-timer-num" id="cwTimerNum">00:45</span>
+            </div>
+            <div class="act-game-score">
+              <span id="actScore">0</span> / <span id="actTotal">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="act-progress-bar"><div class="act-progress-fill" id="actProgress" style="width:0%"></div></div>
+
+        <!-- MISSING LETTERS GAME -->
+        <div id="missing-game" class="act-game-content" style="display:none">
+          <div class="pixel-board">
+            <div class="pixel-board-title">توقع الحروف الناقصة</div>
+            <div class="missing-clue" id="missingClue"></div>
+            <div class="missing-word" id="missingWord"></div>
+            <div class="missing-options" id="missingOptions"></div>
+            <div class="act-feedback" id="missingFeedback"></div>
+          </div>
+          <div class="act-nav-btns">
+            <button class="act-next-btn" id="missingNextBtn" onclick="nextMissing()" style="display:none">التالي ◀</button>
+          </div>
+        </div>
+
+        <!-- CROSSWORD GAME -->
+        <div id="crossword-game" class="act-game-content" style="display:none">
+          <!-- Letter Grid always on top -->
+          <div class="cw-grid-wrapper">
+            <div class="cw-grid-label">🔍 انقر على الحروف في الشبكة لتحديد الإجابة</div>
+            <div class="cw-grid" id="cwGrid"></div>
+            <div class="cw-selected-display" id="cwSelectedDisplay">
+              <span class="cw-sel-label">الكلمة المختارة:</span>
+              <span class="cw-sel-word" id="cwSelWord">—</span>
+              <button class="cw-clear-btn" onclick="clearCwSelection()">✕ مسح</button>
+              <button class="cw-confirm-btn" id="cwConfirmBtn" onclick="confirmCwAnswer()" disabled>✓ تأكيد</button>
+            </div>
+          </div>
+          <!-- Current question clue -->
+          <div class="pixel-board" style="margin-top:16px">
+            <div class="cw-clue-num" id="cwClueNum"></div>
+            <div class="cw-clue-text" id="cwClueText"></div>
+            <div class="act-feedback" id="cwFeedback"></div>
+          </div>
+          <div class="act-nav-btns">
+            <button class="act-next-btn" id="cwNextBtn" onclick="nextCrossword()" style="display:none">التالي ◀</button>
+          </div>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="act-result-screen" class="act-game-content" style="display:none">
+          <div class="pixel-result-board">
+            <div class="pixel-result-stars" id="actResultStars">⭐⭐⭐</div>
+            <div class="pixel-result-score" id="actResultScore">0/0</div>
+            <div class="pixel-result-msg" id="actResultMsg"></div>
+            <button class="pixel-retry-btn" onclick="retryActivity()">🔄 أعد النشاط</button>
+            <button class="pixel-retry-btn" style="background:#e8b855;color:#1a1a2e;margin-right:10px" onclick="backToActSelect()">🏠 الأنشطة</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="pixel-ground"></div>
+    </div>
+
+    <!-- EDIT ACTIVITIES -->
+    <div id="act-edit-area" style="margin-top:32px">
+      <div class="edit-instructions">
+        <strong>✏️ تعديل أسئلة الأنشطة:</strong> يمكنك تعديل أسئلة الحروف الناقصة والكلمات المتقاطعة، وإضافة أسئلة جديدة أو حذفها.
+      </div>
+
+      <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+        <button class="tab-btn active" id="edit-act-missing-btn" onclick="showActEdit('missing',this)" style="border-radius:8px;border:1.5px solid var(--border)">✏️ تعديل الحروف الناقصة</button>
+        <button class="tab-btn" id="edit-act-cw-btn" onclick="showActEdit('crossword',this)" style="border-radius:8px;border:1.5px solid var(--border)">✏️ تعديل الكلمات المتقاطعة</button>
+      </div>
+
+      <div id="edit-missing-panel">
+        <div id="editMissingContainer"></div>
+        <button class="add-question-btn" onclick="addMissingQ()">＋ إضافة سؤال حروف ناقصة</button>
+      </div>
+      <div id="edit-cw-panel" style="display:none">
+        <div id="editCwContainer"></div>
+        <button class="add-question-btn" onclick="addCwQ()">＋ إضافة سؤال كلمات متقاطعة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT TAB -->
+  <div class="tab-panel" id="panel-edit">
+    <div class="edit-instructions">
+      <strong>طريقة التعديل:</strong> يمكنك تعديل نص السؤال والخيارات وتحديد الإجابة الصحيحة لكل سؤال. اضغط <strong>حفظ</strong> بعد كل تعديل، ثم اضغط <strong>تطبيق التعديلات</strong> لتحديث الاختبار.
+    </div>
+    <div id="editContainer"></div>
+    <button class="add-question-btn" onclick="addQuestion()">＋ إضافة سؤال جديد</button>
+    <button class="apply-btn" onclick="applyEdits()">✅ تطبيق التعديلات على الاختبار</button>
+  </div>
+
+</main>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ============================================================
+// DATA — all questions from OPEC lesson
+// ============================================================
+let questions = [
+  // MCQ
+  {
+    id:1, type:'mcq',
+    text:'في أي مدينة تأسست منظمة أوبك في البداية؟',
+    options:['فيينا','جنيف','نيويورك','لندن'],
+    answer:1
+  },
+  {
+    id:2, type:'mcq',
+    text:'كم عدد الدول المؤسسة لمنظمة أوبك عند تأسيسها؟',
+    options:['ثلاث دول','أربع دول','خمس دول','ست دول'],
+    answer:2
+  },
+  {
+    id:3, type:'mcq',
+    text:'كم تستحوذ منظمة أوبك من احتياطيات النفط العالمية تقريباً؟',
+    options:['50%','60%','70%','80%'],
+    answer:3
+  },
+  {
+    id:4, type:'mcq',
+    text:'ما نسبة الغاز الطبيعي التي تمتلكها دول أوبك من الاحتياطي العالمي؟',
+    options:['30%','40%','50%','60%'],
+    answer:2
+  },
+  {
+    id:5, type:'mcq',
+    text:'كم مرة يجتمع مؤتمر أوبك سنوياً بشكل عام؟',
+    options:['مرة واحدة','مرتين','ثلاث مرات','أربع مرات'],
+    answer:1
+  },
+  {
+    id:6, type:'mcq',
+    text:'ما الهدف الأول لمنظمة أوبك؟',
+    options:['تحديد أسعار النفط منفردة','تنسيق وتوحيد السياسات النفطية للبلدان الأعضاء','احتكار سوق النفط العالمي','تمويل الدول النامية'],
+    answer:1
+  },
+  {
+    id:7, type:'mcq',
+    text:'ما المقر الحالي لمنظمة أوبك؟',
+    options:['جنيف — سويسرا','لندن — بريطانيا','فيينا — النمسا','نيويورك — أمريكا'],
+    answer:2
+  },
+  {
+    id:8, type:'mcq',
+    text:'تأسست منظمة أوبك عام:',
+    options:['1960م','1970م','1973م','1980م'],
+    answer:0
+  },
+  {
+    id:9, type:'mcq',
+    text:'ما الاسم الكامل لـ OPEC بالإنجليزية؟',
+    options:['Oil Producing Exporting Countries','Organization of Petroleum Exporting Countries','Organization of Producing Energy Countries','Oil Price Exporting Cooperation'],
+    answer:1
+  },
+  {
+    id:10, type:'mcq',
+    text:'في أي شهور يُعقد مؤتمر أوبك عادةً؟',
+    options:['يناير ويوليو','مارس وسبتمبر','أبريل وأكتوبر','فبراير وأغسطس'],
+    answer:1
+  },
+
+  // TRUE / FALSE
+  {
+    id:11, type:'tf',
+    text:'يُعدّ النفط سلعة إستراتيجية ناضبة (غير متجددة).',
+    answer:true
+  },
+  {
+    id:12, type:'tf',
+    text:'الدول الأعضاء في أوبك ينتجون نحو 44٪ من ناتج نفط العالم.',
+    answer:true
+  },
+  {
+    id:13, type:'tf',
+    text:'ارتفاع أسعار النفط يؤدي إلى خفض أسعار السلع الاستهلاكية.',
+    answer:false
+  },
+  {
+    id:14, type:'tf',
+    text:'تتألف منظمة أوبك من ثلاثة أجهزة رئيسية: المؤتمر الوزاري ومجلس المحافظين والأمانة العامة.',
+    answer:true
+  },
+  {
+    id:15, type:'tf',
+    text:'كانت أسعار النفط تُحدَّد حتى عام 1973م بآلية العرض والطلب فقط.',
+    answer:true
+  },
+
+  // MATCH
+  {
+    id:16, type:'match',
+    text:'صِل كل مفهوم بتعريفه الصحيح:',
+    pairs:[
+      {right:'تنسيق السياسات النفطية للدول الأعضاء', left:'الهدف الأول لأوبك'},
+      {right:'فيينا — النمسا', left:'المقر الحالي لأوبك'},
+      {right:'مرتين في السنة — مارس وسبتمبر', left:'اجتماعات مؤتمر أوبك'},
+    ]
+  },
+  {
+    id:17, type:'match',
+    text:'صِل كل دولة بدورها في أوبك:',
+    pairs:[
+      {right:'إحدى الدول المؤسسة الخمس لأوبك', left:'المملكة العربية السعودية'},
+      {right:'أكبر منتج للنفط في المنظمة تاريخياً', left:'العراق'},
+      {right:'دولة عضو من قارة أمريكا اللاتينية', left:'فنزويلا'},
+    ]
+  },
+  {
+    id:18, type:'mcq',
+    text:'ما تأثير انخفاض أسعار النفط على الدول المنتجة؟',
+    options:['زيادة عائداتها السنوية','تراجع العائدات وارتفاع عجز الموازنة','تحسين النمو الاقتصادي لديها','لا يؤثر على ميزانياتها'],
+    answer:1
+  },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let userAnswers = {}; // {qId: value}
+let matchSelected = {}; // {qId: leftIndex}
+let matchResults = {}; // {qId: {li: bool}}
+let submitted = false;
+
+// ============================================================
+// RENDER QUIZ
+// ============================================================
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  userAnswers = {}; matchSelected = {}; matchResults = {};
+  submitted = false;
+  document.getElementById('resultCard').classList.remove('show');
+  document.getElementById('submitBtn').disabled = false;
+  updateCounters();
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'qcard-' + q.id;
+
+    let typeLabel = q.type === 'mcq' ? 'اختيار متعدد' : q.type === 'tf' ? 'صح وخطأ' : 'وصل';
+    let typeColor = q.type === 'mcq' ? '' : q.type === 'tf' ? 'style="background:rgba(45,53,97,0.08);color:var(--ink-mid);border-color:rgba(45,53,97,0.2)"' : 'style="background:rgba(201,151,58,0.1);color:var(--gold);border-color:rgba(201,151,58,0.3)"';
+
+    let bodyHTML = '';
+    if (q.type === 'mcq') {
+      const letters = ['أ','ب','ج','د'];
+      bodyHTML = `<ul class="options-list">${q.options.map((o,i)=>`
+        <li class="option-item" id="opt-${q.id}-${i}" onclick="selectMCQ(${q.id},${i})">
+          <span class="option-letter">${letters[i]}</span>${o}
+        </li>`).join('')}</ul>`;
+    } else if (q.type === 'tf') {
+      bodyHTML = `<div class="tf-options">
+        <button class="tf-btn" id="tf-${q.id}-true" onclick="selectTF(${q.id},true)">✅ صح</button>
+        <button class="tf-btn" id="tf-${q.id}-false" onclick="selectTF(${q.id},false)">❌ خطأ</button>
+      </div>`;
+    } else if (q.type === 'match') {
+      bodyHTML = buildMatchHTML(q);
+    }
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">السؤال ${idx+1} من ${questions.length}</span>
+        <span class="q-type-badge" ${typeColor}>${typeLabel}</span>
+      </div>
+      <div class="q-text">${q.text}</div>
+      ${bodyHTML}
+      <div class="answer-feedback" id="fb-${q.id}"></div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Attach match click events
+  questions.filter(q=>q.type==='match').forEach(q=>{
+    matchSelected[q.id] = null;
+  });
+}
+
+function buildMatchHTML(q) {
+  const shuffledRight = [...q.pairs.map(p=>p.right)].sort(()=>Math.random()-0.5);
+  // store shuffled order
+  q._shuffled = shuffledRight;
+  return `<div class="match-container">
+    <div>
+      <div class="match-col-title">العمود الأول</div>
+      <div class="match-items">${q.pairs.map((p,i)=>`
+        <div class="match-item" id="ml-${q.id}-${i}" onclick="selectMatchLeft(${q.id},${i})">
+          <span class="match-dot"></span>${p.left}
+        </div>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="match-col-title">العمود الثاني</div>
+      <div class="match-items">${shuffledRight.map((r,i)=>`
+        <div class="match-item" id="mr-${q.id}-${i}" onclick="selectMatchRight(${q.id},${i})">
+          <span class="match-dot"></span>${r}
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function selectMCQ(qId, optIdx) {
+  if (submitted) return;
+  const q = questions.find(q=>q.id===qId);
+  // deselect all
+  q.options.forEach((_,i) => {
+    const el = document.getElementById(`opt-${qId}-${i}`);
+    if(el) el.classList.remove('selected');
+  });
+  const chosen = document.getElementById(`opt-${qId}-${optIdx}`);
+  if(chosen) chosen.classList.add('selected');
+  userAnswers[qId] = optIdx;
+  updateCounters();
+}
+
+function selectTF(qId, val) {
+  if (submitted) return;
+  document.getElementById(`tf-${qId}-true`).classList.remove('selected');
+  document.getElementById(`tf-${qId}-false`).classList.remove('selected');
+  document.getElementById(`tf-${qId}-${val}`).classList.add('selected');
+  userAnswers[qId] = val;
+  updateCounters();
+}
+
+function selectMatchLeft(qId, leftIdx) {
+  if (submitted) return;
+  // clear previous selection
+  const q = questions.find(q=>q.id===qId);
+  q.pairs.forEach((_,i) => document.getElementById(`ml-${qId}-${i}`)?.classList.remove('selected-left'));
+  document.getElementById(`ml-${qId}-${leftIdx}`)?.classList.add('selected-left');
+  matchSelected[qId] = leftIdx;
+}
+
+function selectMatchRight(qId, rightIdx) {
+  if (submitted) return;
+  if (matchSelected[qId] === null || matchSelected[qId] === undefined) return;
+  const leftIdx = matchSelected[qId];
+  const q = questions.find(q=>q.id===qId);
+
+  // check correctness
+  const correctRight = q.pairs[leftIdx].right;
+  const chosenRight = q._shuffled[rightIdx];
+  const isCorrect = correctRight === chosenRight;
+
+  if (!matchResults[qId]) matchResults[qId] = {};
+  matchResults[qId][leftIdx] = isCorrect;
+
+  // style
+  const leftEl = document.getElementById(`ml-${qId}-${leftIdx}`);
+  const rightEl = document.getElementById(`mr-${qId}-${rightIdx}`);
+  if(leftEl) { leftEl.classList.remove('selected-left'); leftEl.classList.add(isCorrect?'matched-correct':'matched-wrong'); leftEl.onclick=null; }
+  if(rightEl) { rightEl.classList.add(isCorrect?'matched-correct':'matched-wrong'); rightEl.onclick=null; }
+
+  matchSelected[qId] = null;
+  // store answer
+  if(!userAnswers[qId]) userAnswers[qId] = {};
+  userAnswers[qId][leftIdx] = isCorrect;
+  updateCounters();
+}
+
+function updateCounters() {
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('answeredCount').textContent = answered;
+  const pct = (answered / questions.length * 100).toFixed(0);
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// ============================================================
+// SUBMIT
+// ============================================================
+function submitQuiz() {
+  submitted = true;
+  document.getElementById('submitBtn').disabled = true;
+  let correct = 0, total = 0;
+
+  questions.forEach(q => {
+    const fb = document.getElementById(`fb-${q.id}`);
+    if (q.type === 'mcq') {
+      total++;
+      const userAns = userAnswers[q.id];
+      const letters = ['أ','ب','ج','د'];
+      // style all options
+      q.options.forEach((_,i) => {
+        const el = document.getElementById(`opt-${q.id}-${i}`);
+        if(!el) return;
+        el.classList.add('disabled');
+        el.classList.remove('selected');
+        if(i === q.answer) el.classList.add('correct');
+        else if(i === userAns && userAns !== q.answer) el.classList.add('wrong');
+      });
+      if(userAns === q.answer) {
+        correct++;
+        if(fb){ fb.className='answer-feedback correct-fb show'; fb.innerHTML='✅ إجابة صحيحة!'; }
+      } else {
+        if(fb){ fb.className='answer-feedback wrong-fb show'; fb.innerHTML=`❌ الإجابة الصحيحة: <strong>${letters[q.answer]}. ${q.options[q.answer]}</strong>`; }
+      }
+
+    } else if (q.type === 'tf') {
+      total++;
+      const userAns = userAnswers[q.id];
+      const tBtn = document.getElementById(`tf-${q.id}-true`);
+      const fBtn = document.getElementById(`tf-${q.id}-false`);
+      if(tBtn) { tBtn.classList.add('disabled'); tBtn.onclick=null; }
+      if(fBtn) { fBtn.classList.add('disabled'); fBtn.onclick=null; }
+      const correctEl = document.getElementById(`tf-${q.id}-${q.answer}`);
+      if(correctEl) correctEl.classList.add('correct');
+      if(userAns !== undefined && userAns !== q.answer) {
+        const wrongEl = document.getElementById(`tf-${q.id}-${userAns}`);
+        if(wrongEl) wrongEl.classList.add('wrong');
+      }
+      if(userAns === q.answer) {
+        correct++;
+        if(fb){ fb.className='answer-feedback correct-fb show'; fb.innerHTML='✅ إجابة صحيحة!'; }
+      } else {
+        if(fb){ fb.className='answer-feedback wrong-fb show'; fb.innerHTML=`❌ الإجابة الصحيحة: <strong>${q.answer ? 'صح ✅' : 'خطأ ❌'}</strong>`; }
+      }
+
+    } else if (q.type === 'match') {
+      const res = matchResults[q.id] || {};
+      q.pairs.forEach((_,i) => {
+        total++;
+        if(res[i] === true) correct++;
+      });
+      if(fb){
+        const allCorrect = Object.values(res).every(v=>v) && Object.keys(res).length===q.pairs.length;
+        fb.className = 'answer-feedback ' + (allCorrect?'correct-fb':'wrong-fb') + ' show';
+        fb.innerHTML = allCorrect ? '✅ جميع الوصلات صحيحة!' : '❌ بعض الوصلات خاطئة — راجع اللون الأخضر للصحيح';
+      }
+    }
+  });
+
+  // Results
+  const pct = Math.round(correct/total*100);
+  let msg = pct >= 90 ? '🌟 ممتاز! أداء رائع جداً!' :
+            pct >= 75 ? '👍 جيد جداً! استمر في المذاكرة' :
+            pct >= 60 ? '📚 جيد، راجع بعض المفاهيم' : '💪 لا تستسلم! أعد قراءة الدرس وحاول مجدداً';
+
+  document.getElementById('resultScore').textContent = `${correct}/${total}`;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('rb-correct').textContent = correct;
+  document.getElementById('rb-wrong').textContent = total - correct;
+  document.getElementById('rb-pct').textContent = pct + '%';
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('resultCard').classList.add('show');
+  document.getElementById('resultCard').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function retryQuiz() {
+  renderQuiz();
+  document.getElementById('resultCard').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ============================================================
+// EDIT PANEL
+// ============================================================
+function renderEditPanel() {
+  const container = document.getElementById('editContainer');
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    container.appendChild(buildEditCard(q, idx));
+  });
+}
+
+function buildEditCard(q, idx) {
+  const wrap = document.createElement('div');
+  wrap.className = 'edit-card';
+  wrap.id = 'ecard-' + q.id;
+
+  let bodyHTML = '';
+  if(q.type === 'mcq') {
+    const letters = ['أ','ب','ج','د'];
+    bodyHTML = `<div class="edit-options">
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:6px">الخيارات (اختر الإجابة الصحيحة بالنقر على الدائرة):</div>
+      ${q.options.map((o,i)=>`
+      <div class="edit-option-row">
+        <input type="radio" name="correct-${q.id}" value="${i}" ${q.answer===i?'checked':''}>
+        <span class="option-letter" style="width:28px;height:28px;font-size:0.8rem">${letters[i]}</span>
+        <input class="edit-option-input" id="eopt-${q.id}-${i}" value="${o}">
+        ${q.answer===i?'<span class="correct-label">✓ صحيح</span>':''}
+      </div>`).join('')}
+    </div>`;
+  } else if(q.type === 'tf') {
+    bodyHTML = `<div class="edit-options">
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px">الإجابة الصحيحة:</div>
+      <div style="display:flex;gap:12px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600">
+          <input type="radio" name="tfcorr-${q.id}" value="true" ${q.answer===true?'checked':''}> ✅ صح
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600">
+          <input type="radio" name="tfcorr-${q.id}" value="false" ${q.answer===false?'checked':''}> ❌ خطأ
+        </label>
+      </div>
+    </div>`;
+  } else if(q.type === 'match') {
+    bodyHTML = `<div class="edit-options">
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px">أزواج الوصل (يسار ← يمين):</div>
+      ${q.pairs.map((p,i)=>`
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:8px">
+        <input class="edit-option-input" id="epairleft-${q.id}-${i}" value="${p.left}">
+        <span style="color:var(--gold);font-size:1.1rem">←</span>
+        <input class="edit-option-input" id="epairright-${q.id}-${i}" value="${p.right}">
+      </div>`).join('')}
+    </div>`;
+  }
+
+  wrap.innerHTML = `
+    <div class="edit-card-header">
+      <span class="edit-card-title">السؤال ${idx+1}</span>
+      <select class="edit-type-select" id="etype-${q.id}">
+        <option value="mcq" ${q.type==='mcq'?'selected':''}>اختيار متعدد</option>
+        <option value="tf" ${q.type==='tf'?'selected':''}>صح وخطأ</option>
+        <option value="match" ${q.type==='match'?'selected':''}>وصل</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input class="edit-input" id="etext-${q.id}" value="${q.text}" placeholder="نص السؤال">
+    </div>
+    ${bodyHTML}
+    <div class="edit-actions">
+      <button class="save-btn" onclick="saveQuestion(${q.id})">💾 حفظ</button>
+      <button class="delete-btn" onclick="deleteQuestion(${q.id})">🗑 حذف</button>
+    </div>
+  `;
+  return wrap;
+}
+
+function saveQuestion(qId) {
+  const q = questions.find(q=>q.id===qId);
+  if(!q) return;
+  const textEl = document.getElementById(`etext-${qId}`);
+  if(textEl) q.text = textEl.value;
+
+  if(q.type === 'mcq') {
+    q.options.forEach((_,i)=>{
+      const el = document.getElementById(`eopt-${qId}-${i}`);
+      if(el) q.options[i] = el.value;
+    });
+    const radio = document.querySelector(`input[name="correct-${qId}"]:checked`);
+    if(radio) q.answer = parseInt(radio.value);
+  } else if(q.type === 'tf') {
+    const radio = document.querySelector(`input[name="tfcorr-${qId}"]:checked`);
+    if(radio) q.answer = radio.value === 'true';
+  } else if(q.type === 'match') {
+    q.pairs.forEach((_,i)=>{
+      const lEl = document.getElementById(`epairleft-${qId}-${i}`);
+      const rEl = document.getElementById(`epairright-${qId}-${i}`);
+      if(lEl) q.pairs[i].left = lEl.value;
+      if(rEl) q.pairs[i].right = rEl.value;
+    });
+  }
+  showNotif('✅ تم حفظ السؤال');
+}
+
+function deleteQuestion(qId) {
+  if(!confirm('هل تريد حذف هذا السؤال؟')) return;
+  questions = questions.filter(q=>q.id!==qId);
+  renderEditPanel();
+  showNotif('🗑 تم حذف السؤال');
+}
+
+let nextId = 100;
+function addQuestion() {
+  const newQ = {
+    id: nextId++, type:'mcq',
+    text:'سؤال جديد',
+    options:['الخيار الأول','الخيار الثاني','الخيار الثالث','الخيار الرابع'],
+    answer:0
+  };
+  questions.push(newQ);
+  renderEditPanel();
+  document.getElementById(`ecard-${newQ.id}`).scrollIntoView({behavior:'smooth'});
+  showNotif('➕ تم إضافة سؤال جديد');
+}
+
+function applyEdits() {
+  document.getElementById('totalCount').textContent = questions.length;
+  renderQuiz();
+  switchTab('quiz', document.querySelector('.tab-btn'));
+  window.scrollTo({top:0,behavior:'smooth'});
+  showNotif('✅ تم تطبيق التعديلات!');
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(name==='edit') renderEditPanel();
+  if(name==='activities') {
+    document.getElementById('act-select-screen').style.display = 'block';
+    document.getElementById('act-game-area').style.display = 'none';
+    document.getElementById('act-edit-area').style.display = 'block';
+    document.getElementById('missing-count').textContent = missingQuestions.length + ' أسئلة';
+    document.getElementById('crossword-count').textContent = crosswordQuestions.length + ' أسئلة';
+    renderEditMissing();
+  }
+}
+
+// ============================================================
+// NOTIFICATION
+// ============================================================
+function showNotif(msg) {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2500);
+}
+
+
+// ============================================================
+// ACTIVITIES DATA
+// ============================================================
+let missingQuestions = [
+  {
+    id:'m1',
+    clue:'هي تجمع دولي أُنشئ بغرض ضمان حقوق الدول المنتجة في صناعة النفط وتوفير النفط للدول المستهلكة بأسعار معقولة.',
+    wordTemplate:'أ_بك',
+    blanks:['و'],  // الحرف الناقص هو و
+    options:['أ','و','ك','ن'],
+    answer:1 // index of correct option
+  },
+  {
+    id:'m2',
+    clue:'هي مصادر الطاقة التي لا تنفد وتتجدد باستمرار مع مرور الوقت.',
+    wordTemplate:'م_ادر_ال_قاقة_ال_تجد_ة',
+    blanks:['ص','ط','م'],
+    options:['ع،ط،م','ص،ا،ط','ص،م،ة','د،م،ة'],
+    answer:1
+  },
+  {
+    id:'m3',
+    clue:'الارتفاع المستمر في المستوى العام للأسعار.',
+    wordTemplate:'ال_ض_م',
+    blanks:['ت','خ'],
+    options:['ت،خ','خ،ت','ا،خ'],
+    answer:0
+  }
+];
+
+let crosswordQuestions = [
+  {
+    id:'c1', num:'١',
+    clue:'دولة خليجية من الأعضاء المؤسسين لمنظمة أوبك.',
+    answer:'السعودية',
+    direction:'row', row:0, colStart:1, colEnd:8  // row 1, cols 1-8 right-to-left: ة,ي,د,و,ع,س,ل,ا
+  },
+  {
+    id:'c2', num:'٢',
+    clue:'عاصمة النمسا والمقر الحالي لمنظمة أوبك.',
+    answer:'فيينا',
+    direction:'row', row:1, colStart:2, colEnd:6  // row 2: ا,ن,ي,ي,ف
+  },
+  {
+    id:'c3', num:'٣',
+    clue:'المدينة التي شهدت تأسيس منظمة أوبك عام 1960م.',
+    answer:'بغداد',
+    direction:'row', row:3, colStart:2, colEnd:6  // row 4: ا,د,غ,ب -> بغداد... ا,د,غ,ب,لي
+  },
+  {
+    id:'c4', num:'٤',
+    clue:'كلمة تعني مصادر الطاقة غير المتجددة — جوهر عمل أوبك (رأسياً في العمود الأول).',
+    answer:'احتياطي',
+    direction:'col', col:0, rowStart:0, rowEnd:7
+  },
+  {
+    id:'c5', num:'٥',
+    clue:'جوهر عمل المنظمة ويسمى "الذهب الأسود" (رأسياً في العمود الثاني).',
+    answer:'النفط',
+    direction:'col', col:1, rowStart:0, rowEnd:4
+  },
+  {
+    id:'c6', num:'٦',
+    clue:'العاصمة السويسرية التي كانت مقراً للمنظمة في بدايتها (رأسياً في العمود الثامن).',
+    answer:'جنيف',
+    direction:'col', col:7, rowStart:0, rowEnd:4
+  }
+];
+
+
+// ============================================================
+// الشبكة 8×8 — col 0 = العمود الأول من اليمين (RTL)
+// الكلمات الأفقية تُقرأ يمين←يسار = col كبير → col صغير
+// الكلمات الرأسية تُقرأ أعلى←أسفل = row صغير → row كبير
+//
+// الإجابات المؤكدة:
+// ① السعودية — صف1 أفقي:  ا(c7)ل(c6)س(c5)ع(c4)و(c3)د(c2)ي(c1)ة(c0)
+// ② فيينا    — صف2 أفقي:  ف(c4)ي(c3)ي(c2)ن(c1)ا(c0)
+// ③ بغداد    — صف4 أفقي:  ب(c4)غ(c3)د(c2)ا(c1)د(c0)
+// ④ احتياطي  — عمود7 رأسي: ا(r0)ح(r1)ت(r2)ي(r3)ا(r4)ط(r5)ي(r6)
+// ⑤ النفط    — عمود5 رأسي: ن(r0)ف(r1)ط(r2) ← 3 حروف = نفط
+//              أو عمود6 رأسي 4 خلايا
+// ⑥ جنيف    — عمود0 رأسي: ج(r2)ن(r3)ي(r4)ف(r5)
+// ============================================================
+const CW_GRID = [
+//   c0    c1    c2    c3    c4    c5    c6    c7
+  [ 'ة',  'ي',  'د',  'و',  'ع',  'س',  'ن',  'ا' ],  // r0
+  [ 'ا',  'ن',  'ي',  'ي',  'ف',  'ف',  'ف',  'ح' ],  // r1
+  [ 'ج',  'ك',  'ع',  'ه',  'م',  'ط',  'ل',  'ت' ],  // r2
+  [ 'ن',  'ا',  'د',  'غ',  'ب',  'ب',  'ن',  'ي' ],  // r3
+  [ 'ي',  'ظ',  'ح',  'ض',  'ر',  'ت',  'ف',  'ا' ],  // r4
+  [ 'ف',  'س',  'ز',  'خ',  'م',  'ص',  'ط',  'ط' ],  // r5
+  [ 'ي',  'ي',  'و',  'ك',  'ب',  'ل',  'ث',  'ي' ],  // r6
+  [ 'ت',  'ش',  'ذ',  'ر',  'د',  'ا',  'غ',  'ع' ],  // r7
+];
+// تعديلات لتضمين الكلمات:
+// ④ احتياطي رأسي col7 r0-r6: ا,ح,ت,ي,ا,ط,ي ✓ (موجودة)
+// ⑤ النفط رأسي col6 r0-r3: ن,ف,ل,ن ← نصلح:
+CW_GRID[0][6] = 'ن';  // r0c6 = ن
+CW_GRID[1][6] = 'ف';  // r1c6 = ف
+CW_GRID[2][6] = 'ط';  // r2c6 = ط
+// col6 r0-r2 = ن,ف,ط = "نفط" ✓
+
+// ⑥ جنيف رأسي col0 r2-r5: ج,ن,ي,ف ✓
+// r2c0=ج ✓, r3c0=ن ✓, r4c0=ي ✓, r5c0=ف ✓
+
+// ============================================================
+const CW_ANSWERS = {
+  // ① السعودية — صف1، col7→col0 (8 حروف)
+  c1: [{r:0,c:7},{r:0,c:6},{r:0,c:5},{r:0,c:4},{r:0,c:3},{r:0,c:2},{r:0,c:1},{r:0,c:0}],
+  // ② فيينا — صف2، col4→col0 (5 حروف)
+  c2: [{r:1,c:4},{r:1,c:3},{r:1,c:2},{r:1,c:1},{r:1,c:0}],
+  // ③ بغداد — صف4، col4→col0 (5 حروف: ب,غ,د,ا,د)
+  c3: [{r:3,c:4},{r:3,c:3},{r:3,c:2},{r:3,c:1},{r:3,c:0}],
+  // ④ احتياطي — col7، row0→row6 (7 حروف)
+  c4: [{r:0,c:7},{r:1,c:7},{r:2,c:7},{r:3,c:7},{r:4,c:7},{r:5,c:7},{r:6,c:7}],
+  // ⑤ النفط — col6، row0→row2 (3 حروف: ن,ف,ط)
+  c5: [{r:0,c:6},{r:1,c:6},{r:2,c:6}],
+  // ⑥ جنيف — col0، row2→row5 (4 حروف: ج,ن,ي,ف)
+  c6: [{r:2,c:0},{r:3,c:0},{r:4,c:0},{r:5,c:0}],
+};
+
+
+// ============================================================
+// TIMER STATE
+// ============================================================
+let cwTimerInterval = null;
+let cwTimeLeft = 0;
+let cwTimerRunning = false;
+
+function startCwTimer(seconds) {
+  clearInterval(cwTimerInterval);
+  cwTimeLeft = seconds;
+  cwTimerRunning = true;
+  updateTimerDisplay();
+  cwTimerInterval = setInterval(() => {
+    cwTimeLeft--;
+    updateTimerDisplay();
+    if(cwTimeLeft <= 10) {
+      document.getElementById('cwTimerBox').style.background = 'rgba(220,38,38,0.15)';
+      document.getElementById('cwTimerBox').style.borderColor = 'var(--wrong)';
+      document.getElementById('cwTimerNum').style.color = 'var(--wrong)';
+      // pulse effect
+      document.getElementById('cwTimerBox').style.animation = 'timerPulse 0.5s ease infinite alternate';
+    }
+    if(cwTimeLeft <= 0) {
+      clearInterval(cwTimerInterval);
+      cwTimerRunning = false;
+      // auto fail current question
+      const q = crosswordQuestions[actCurrentIdx];
+      if(q) {
+        highlightAnswer(q, false);
+        const fb = document.getElementById('cwFeedback');
+        fb.textContent = `⏰ انتهى الوقت! الإجابة الصحيحة: ${q.answer}`;
+        fb.className = 'act-feedback show bad';
+        document.getElementById('cwNextBtn').style.display = 'inline-block';
+        setCellsDisabled(true);
+      }
+    }
+  }, 1000);
+}
+
+function stopCwTimer() { clearInterval(cwTimerInterval); cwTimerRunning = false; }
+
+function updateTimerDisplay() {
+  const el = document.getElementById('cwTimerNum');
+  if(!el) return;
+  const m = Math.floor(cwTimeLeft/60).toString().padStart(2,'0');
+  const s = (cwTimeLeft%60).toString().padStart(2,'0');
+  el.textContent = `${m}:${s}`;
+  // reset styles if time ok
+  if(cwTimeLeft > 10) {
+    const box = document.getElementById('cwTimerBox');
+    if(box) {
+      box.style.background=''; box.style.borderColor=''; box.style.animation='';
+      document.getElementById('cwTimerNum').style.color='';
+    }
+  }
+}
+
+// ============================================================
+// GRID RENDERING
+// ============================================================
+let cwSelectedCells = []; // [{r,c}]
+let cwCellsLocked = false;
+
+function renderCwGrid(highlightQ) {
+  const grid = document.getElementById('cwGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+
+  CW_GRID.forEach((rowArr, r) => {
+    rowArr.forEach((letter, c) => {
+      const cell = document.createElement('div');
+      cell.className = 'cw-cell';
+      cell.id = `cwcell-${r}-${c}`;
+      cell.textContent = letter;
+
+      // hint highlight for current question
+      if(highlightQ) {
+        const ans = CW_ANSWERS[highlightQ.id];
+        if(ans && ans.find(a=>a.r===r&&a.c===c)) {
+          cell.classList.add('hint-cell');
+        }
+      }
+
+      // already revealed
+      if(cwRevealedCells[`${r}-${c}`]) {
+        cell.classList.add('revealed', 'disabled');
+      } else {
+        cell.onclick = () => toggleCwCell(r, c, cell);
+      }
+      grid.appendChild(cell);
+    });
+  });
+}
+
+let cwRevealedCells = {}; // {`r-c`: true}
+
+function toggleCwCell(r, c, cell) {
+  if(cwCellsLocked) return;
+  const idx = cwSelectedCells.findIndex(s=>s.r===r&&s.c===c);
+  if(idx >= 0) {
+    cwSelectedCells.splice(idx,1);
+    cell.classList.remove('selected');
+  } else {
+    cwSelectedCells.push({r,c});
+    cell.classList.add('selected');
+  }
+  updateSelectedWord();
+}
+
+function buildWord(cells) {
+  if(!cells.length) return '';
+  // Detect direction: are all rows the same? → horizontal. Are all cols the same? → vertical.
+  const allSameRow = cells.every(s => s.r === cells[0].r);
+  const allSameCol = cells.every(s => s.c === cells[0].c);
+
+  let sorted;
+  if(allSameRow) {
+    // Horizontal row: Arabic reads RIGHT → LEFT, col 0 = rightmost cell displayed
+    // So the first letter (rightmost on screen) = smallest col index
+    sorted = [...cells].sort((a,b) => a.c - b.c);
+  } else if(allSameCol) {
+    // Vertical column: reads TOP → BOTTOM, row 0 = top
+    sorted = [...cells].sort((a,b) => a.r - b.r);
+  } else {
+    // Mixed selection — sort by col ascending as fallback
+    sorted = [...cells].sort((a,b) => a.c !== b.c ? a.c - b.c : a.r - b.r);
+  }
+  return sorted.map(s => CW_GRID[s.r][s.c]).join('');
+}
+
+function updateSelectedWord() {
+  if(cwSelectedCells.length === 0) {
+    document.getElementById('cwSelWord').textContent = '—';
+    document.getElementById('cwConfirmBtn').disabled = true;
+    return;
+  }
+  const word = buildWord(cwSelectedCells);
+  document.getElementById('cwSelWord').textContent = word;
+  document.getElementById('cwConfirmBtn').disabled = false;
+}
+
+function clearCwSelection() {
+  cwSelectedCells.forEach(s=>{
+    const el = document.getElementById(`cwcell-${s.r}-${s.c}`);
+    if(el) el.classList.remove('selected');
+  });
+  cwSelectedCells = [];
+  document.getElementById('cwSelWord').textContent = '—';
+  document.getElementById('cwConfirmBtn').disabled = true;
+}
+
+function setCellsDisabled(val) {
+  cwCellsLocked = val;
+  document.querySelectorAll('.cw-cell:not(.revealed)').forEach(c=>{
+    if(val) { c.classList.add('disabled'); }
+    else { c.classList.remove('disabled'); }
+  });
+}
+
+function confirmCwAnswer() {
+  if(!cwSelectedCells.length) return;
+  stopCwTimer();
+  const q = crosswordQuestions[actCurrentIdx];
+
+  // Build word using same RTL-aware logic
+  const selectedWord = buildWord(cwSelectedCells);
+
+  // Normalize: remove ال prefix for flexible matching, also try reversed
+  const normalize = w => w.replace(/^ال/,'').trim();
+  const rev = w => w.split('').reverse().join('');
+  const isCorrect =
+    selectedWord === q.answer ||
+    normalize(selectedWord) === normalize(q.answer) ||
+    rev(selectedWord) === q.answer ||
+    normalize(rev(selectedWord)) === normalize(q.answer);
+
+  const fb = document.getElementById('cwFeedback');
+  if(isCorrect) {
+    actCorrect++;
+    document.getElementById('actScore').textContent = actCorrect;
+    fb.textContent = '✅ ممتاز! وجدت الكلمة الصحيحة! 🎉';
+    fb.className = 'act-feedback show good';
+    // Mark selected cells green
+    cwSelectedCells.forEach(s=>{
+      const el = document.getElementById(`cwcell-${s.r}-${s.c}`);
+      if(el) { el.classList.remove('selected','hint-cell'); el.classList.add('correct-cell'); }
+    });
+  } else {
+    fb.textContent = `❌ الإجابة الصحيحة: "${q.answer}" — تم تلوينها بالأخضر في الشبكة`;
+    fb.className = 'act-feedback show bad';
+    // Mark selected cells red
+    cwSelectedCells.forEach(s=>{
+      const el = document.getElementById(`cwcell-${s.r}-${s.c}`);
+      if(el) { el.classList.remove('selected'); el.classList.add('wrong-cell'); }
+    });
+    // Show correct cells green
+    const correctCells = CW_ANSWERS[q.id] || [];
+    correctCells.forEach(s=>{
+      const el = document.getElementById(`cwcell-${s.r}-${s.c}`);
+      if(el) { el.classList.remove('selected','wrong-cell'); el.classList.add('correct-cell'); }
+    });
+  }
+
+  // Reveal correct cells permanently
+  const correctCells = CW_ANSWERS[q.id] || [];
+  correctCells.forEach(s=>{ cwRevealedCells[`${s.r}-${s.c}`]=true; });
+
+  setCellsDisabled(true);
+  clearCwSelection();
+  document.getElementById('cwNextBtn').style.display = 'inline-block';
+}
+
+function highlightAnswer(q, isCorrect, selectedSorted) {
+  // no-op, handled inline
+}
+
+// -------- CROSSWORD LOAD --------
+function loadCwQ(idx) {
+  if(idx >= crosswordQuestions.length) { stopCwTimer(); showActResult(); return; }
+  const q = crosswordQuestions[idx];
+  const pct = (idx / crosswordQuestions.length * 100).toFixed(0);
+  document.getElementById('actProgress').style.width = pct + '%';
+
+  document.getElementById('cwClueNum').textContent = `السؤال ${q.num} من ${crosswordQuestions.length}`;
+  document.getElementById('cwClueText').textContent = q.clue;
+  document.getElementById('cwFeedback').className = 'act-feedback';
+  document.getElementById('cwFeedback').textContent = '';
+  document.getElementById('cwNextBtn').style.display = 'none';
+
+  cwSelectedCells = [];
+  cwCellsLocked = false;
+  renderCwGrid(q);
+  document.getElementById('cwSelWord').textContent = '—';
+  document.getElementById('cwConfirmBtn').disabled = true;
+
+  // Start timer: 45 seconds per question
+  startCwTimer(45);
+}
+
+function nextCrossword() {
+  stopCwTimer();
+  actCurrentIdx++;
+  loadCwQ(actCurrentIdx);
+}
+
+
+
+// ============================================================
+// ACTIVITIES STATE
+// ============================================================
+let currentActivity = null;
+let actCurrentIdx = 0;
+let actCorrect = 0;
+
+function startActivity(type) {
+  currentActivity = type;
+  actCurrentIdx = 0;
+  actCorrect = 0;
+  cwRevealedCells = {};
+  document.getElementById('act-select-screen').style.display = 'none';
+  document.getElementById('act-game-area').style.display = 'block';
+  document.getElementById('act-edit-area').style.display = 'none';
+
+  if(type === 'missing') {
+    stopCwTimer();
+    document.getElementById('actGameTitle').textContent = '🔤 توقع الحروف الناقصة';
+    document.getElementById('actTotal').textContent = missingQuestions.length;
+    document.getElementById('actScore').textContent = '0';
+    document.getElementById('missing-game').style.display = 'block';
+    document.getElementById('crossword-game').style.display = 'none';
+    document.getElementById('act-result-screen').style.display = 'none';
+    document.getElementById('cwTimerBox').style.display = 'none';
+    loadMissingQ(0);
+  } else {
+    document.getElementById('actGameTitle').textContent = '🔍 الكلمات المتقاطعة';
+    document.getElementById('actTotal').textContent = crosswordQuestions.length;
+    document.getElementById('actScore').textContent = '0';
+    document.getElementById('crossword-game').style.display = 'block';
+    document.getElementById('missing-game').style.display = 'none';
+    document.getElementById('act-result-screen').style.display = 'none';
+    document.getElementById('cwTimerBox').style.display = 'flex';
+    loadCwQ(0);
+  }
+}
+
+function backToActSelect() {
+  stopCwTimer();
+  document.getElementById('act-select-screen').style.display = 'block';
+  document.getElementById('act-game-area').style.display = 'none';
+  document.getElementById('act-edit-area').style.display = 'block';
+  document.getElementById('missing-count').textContent = missingQuestions.length + ' أسئلة';
+  document.getElementById('crossword-count').textContent = crosswordQuestions.length + ' أسئلة';
+}
+
+// -------- MISSING LETTERS --------
+function loadMissingQ(idx) {
+  if(idx >= missingQuestions.length) { showActResult(); return; }
+  const q = missingQuestions[idx];
+  const pct = (idx / missingQuestions.length * 100).toFixed(0);
+  document.getElementById('actProgress').style.width = pct + '%';
+  document.getElementById('missingClue').textContent = q.clue;
+  document.getElementById('missingWord').innerHTML = q.wordTemplate.replace(/_/g, '<span class="missing-blank">_</span>');
+  document.getElementById('missingFeedback').className = 'act-feedback';
+  document.getElementById('missingFeedback').textContent = '';
+  document.getElementById('missingNextBtn').style.display = 'none';
+  const optsEl = document.getElementById('missingOptions');
+  optsEl.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'missing-opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => answerMissing(i, q);
+    optsEl.appendChild(btn);
+  });
+}
+
+function answerMissing(idx, q) {
+  const btns = document.querySelectorAll('.missing-opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('missingFeedback');
+  if(idx === q.answer) {
+    btns[idx].classList.add('correct-pick');
+    actCorrect++;
+    document.getElementById('actScore').textContent = actCorrect;
+    fb.textContent = '✅ ممتاز! إجابة صحيحة!';
+    fb.className = 'act-feedback show good';
+    document.getElementById('missingWord').innerHTML = q.wordTemplate.replace(/_/g, `<span style="color:var(--correct);border-bottom:3px solid var(--correct)">${q.blanks[0]||'◆'}</span>`);
+  } else {
+    btns[idx].classList.add('wrong-pick');
+    if(q.answer < btns.length) btns[q.answer].classList.add('correct-pick');
+    fb.textContent = `❌ الإجابة الصحيحة: ${q.options[q.answer]}`;
+    fb.className = 'act-feedback show bad';
+  }
+  document.getElementById('missingNextBtn').style.display = 'inline-block';
+}
+
+function nextMissing() {
+  actCurrentIdx++;
+  loadMissingQ(actCurrentIdx);
+}
+
+function showActResult() {
+  document.getElementById('missing-game').style.display = 'none';
+  document.getElementById('crossword-game').style.display = 'none';
+  document.getElementById('act-result-screen').style.display = 'block';
+  document.getElementById('actProgress').style.width = '100%';
+
+  const total = currentActivity === 'missing' ? missingQuestions.length : crosswordQuestions.length;
+  const pct = Math.round(actCorrect/total*100);
+  const stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+  const msg = pct >= 80 ? '🎉 رائع! أداء ممتاز!' : pct >= 50 ? '👍 جيد! يمكنك التحسين' : '💪 حاول مرة أخرى!';
+
+  document.getElementById('actResultStars').textContent = stars;
+  document.getElementById('actResultScore').textContent = `${actCorrect}/${total}`;
+  document.getElementById('actResultMsg').textContent = msg;
+}
+
+function retryActivity() {
+  startActivity(currentActivity);
+}
+
+// -------- EDIT ACTIVITIES --------
+function showActEdit(type, btn) {
+  document.querySelectorAll('#act-edit-area .tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('edit-missing-panel').style.display = type==='missing'?'block':'none';
+  document.getElementById('edit-cw-panel').style.display = type==='crossword'?'block':'none';
+  if(type==='missing') renderEditMissing();
+  else renderEditCw();
+}
+
+function renderEditMissing() {
+  const c = document.getElementById('editMissingContainer');
+  c.innerHTML = '';
+  missingQuestions.forEach((q,i) => {
+    const div = document.createElement('div');
+    div.className = 'edit-card'; div.id = 'em-'+q.id;
+    div.innerHTML = `
+      <div class="edit-card-header">
+        <span class="edit-card-title">سؤال الحروف الناقصة ${i+1}</span>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">النص التوضيحي (الخيط)</label>
+        <textarea class="edit-textarea" id="em-clue-${q.id}" style="min-height:70px">${q.clue}</textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">الكلمة مع الفراغات (استخدم _ للحرف الناقص)</label>
+        <input class="edit-input" id="em-word-${q.id}" value="${q.wordTemplate}">
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">الخيارات (افصل بفاصلة)</label>
+        <input class="edit-input" id="em-opts-${q.id}" value="${q.options.join(',')}">
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">رقم الإجابة الصحيحة (0 = الأول)</label>
+        <input class="edit-input" id="em-ans-${q.id}" value="${q.answer}" type="number" min="0" max="3" style="width:100px">
+      </div>
+      <div class="edit-actions">
+        <button class="save-btn" onclick="saveMissingQ('${q.id}')">💾 حفظ</button>
+        <button class="delete-btn" onclick="deleteMissingQ('${q.id}')">🗑 حذف</button>
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+function saveMissingQ(qId) {
+  const q = missingQuestions.find(q=>q.id===qId);
+  if(!q) return;
+  q.clue = document.getElementById('em-clue-'+qId).value;
+  q.wordTemplate = document.getElementById('em-word-'+qId).value;
+  q.options = document.getElementById('em-opts-'+qId).value.split(',').map(s=>s.trim());
+  q.answer = parseInt(document.getElementById('em-ans-'+qId).value)||0;
+  showNotif('✅ تم حفظ السؤال');
+}
+function deleteMissingQ(qId) {
+  if(!confirm('حذف هذا السؤال؟')) return;
+  missingQuestions = missingQuestions.filter(q=>q.id!==qId);
+  renderEditMissing();
+  showNotif('🗑 تم الحذف');
+}
+let mNextId=200;
+function addMissingQ() {
+  missingQuestions.push({id:'m'+mNextId++, clue:'اكتب النص هنا', wordTemplate:'كلمة_', blanks:['ة'], options:['أ','ب','ج','د'], answer:0});
+  renderEditMissing();
+  showNotif('➕ تم إضافة سؤال');
+}
+
+function renderEditCw() {
+  const c = document.getElementById('editCwContainer');
+  c.innerHTML = '';
+
+  // ---- GRID EDITOR ----
+  const gridCard = document.createElement('div');
+  gridCard.className = 'edit-card';
+  gridCard.innerHTML = `
+    <div class="edit-card-header">
+      <span class="edit-card-title">✏️ تعديل شبكة الحروف (8×8)</span>
+    </div>
+    <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;line-height:1.6">
+      انقر على أي خلية لتعديل حرفها. الشبكة تُقرأ من اليمين لليسار كما تظهر في اللعبة.
+    </div>
+    <div id="gridEditorWrap"></div>
+    <div class="edit-actions" style="margin-top:16px">
+      <button class="save-btn" onclick="saveGridEdit()">💾 حفظ الشبكة</button>
+      <button class="delete-btn" style="background:rgba(201,151,58,0.1);color:var(--gold);border-color:rgba(201,151,58,0.3)" onclick="resetGrid()">↺ إعادة الشبكة الأصلية</button>
+    </div>
+  `;
+  c.appendChild(gridCard);
+  renderGridEditor();
+
+  // ---- QUESTIONS EDITOR ----
+  const qHeader = document.createElement('div');
+  qHeader.innerHTML = `<div class="sec-title" style="margin:28px 0 16px">✏️ تعديل الأسئلة والإجابات</div>`;
+  c.appendChild(qHeader);
+
+  crosswordQuestions.forEach((q,i) => {
+    const div = document.createElement('div');
+    div.className = 'edit-card'; div.id = 'ec-'+q.id;
+    div.innerHTML = `
+      <div class="edit-card-header">
+        <span class="edit-card-title">السؤال ${i+1} — ${q.num}</span>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">نص السؤال / الخيط</label>
+        <textarea class="edit-textarea" id="ec-clue-${q.id}" style="min-height:70px">${q.clue}</textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">الإجابة الصحيحة (الكلمة كاملة)</label>
+        <input class="edit-input" id="ec-ans-${q.id}" value="${q.answer}" placeholder="مثال: السعودية">
+      </div>
+      <div class="edit-actions">
+        <button class="save-btn" onclick="saveCwQ('${q.id}')">💾 حفظ</button>
+        <button class="delete-btn" onclick="deleteCwQ('${q.id}')">🗑 حذف</button>
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+function renderGridEditor() {
+  const wrap = document.getElementById('gridEditorWrap');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+
+  // Column numbers header
+  const header = document.createElement('div');
+  header.style.cssText = 'display:grid;grid-template-columns:repeat(8,1fr);gap:3px;margin-bottom:4px;direction:rtl';
+  for(let c=1;c<=8;c++){
+    const lbl = document.createElement('div');
+    lbl.style.cssText = 'text-align:center;font-size:0.7rem;font-weight:800;color:var(--gold);padding:2px 0';
+    lbl.textContent = c;
+    header.appendChild(lbl);
+  }
+  wrap.appendChild(header);
+
+  const gridWrap = document.createElement('div');
+  gridWrap.style.cssText = 'display:grid;grid-template-columns:repeat(8,1fr);gap:3px;direction:rtl';
+
+  CW_GRID.forEach((rowArr, r) => {
+    rowArr.forEach((letter, col) => {
+      const cell = document.createElement('div');
+      cell.style.cssText = `
+        position:relative; aspect-ratio:1;
+        background:#fff; border:2px solid #ddd; border-radius:6px;
+        display:flex; align-items:center; justify-content:center;
+        cursor:pointer; transition:all 0.15s;
+        font-family:'Cairo',sans-serif; font-size:clamp(0.7rem,1.8vw,1rem); font-weight:800;
+      `;
+      cell.id = `gedit-${r}-${col}`;
+      cell.textContent = letter;
+      cell.title = `صف ${r+1} ، عمود ${col+1}`;
+      cell.onclick = () => openCellEdit(r, col, cell);
+      cell.onmouseenter = () => { cell.style.background='rgba(201,151,58,0.12)'; cell.style.borderColor='var(--gold)'; };
+      cell.onmouseleave = () => { if(document.getElementById(`gedit-${r}-${col}`) && !cell.classList.contains('editing')) { cell.style.background='#fff'; cell.style.borderColor='#ddd'; } };
+      gridWrap.appendChild(cell);
+    });
+  });
+  wrap.appendChild(gridWrap);
+
+  // Row numbers on side
+  const rowLabels = document.createElement('div');
+  rowLabels.style.cssText = 'display:flex;gap:4px;margin-top:8px;direction:rtl';
+  for(let r=1;r<=8;r++){
+    const lbl = document.createElement('span');
+    lbl.style.cssText = 'font-size:0.7rem;color:var(--text-muted);font-weight:700';
+    lbl.textContent = `صف${r}`;
+    rowLabels.appendChild(lbl);
+  }
+}
+
+let editingCell = null;
+
+function openCellEdit(r, col, cellEl) {
+  // Close any open edit
+  if(editingCell) closeInlineEdit(editingCell.r, editingCell.c);
+
+  editingCell = {r, c:col};
+  const cell = document.getElementById(`gedit-${r}-${col}`);
+  if(!cell) return;
+
+  const currentLetter = CW_GRID[r][col];
+  cell.innerHTML = '';
+  cell.style.background = 'rgba(26,107,74,0.08)';
+  cell.style.borderColor = 'var(--emerald)';
+  cell.style.padding = '2px';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.maxLength = 2;
+  input.value = currentLetter;
+  input.style.cssText = `
+    width:100%; height:100%; border:none; background:transparent;
+    font-family:'Cairo',sans-serif; font-size:clamp(0.65rem,1.6vw,0.95rem); font-weight:900;
+    text-align:center; outline:none; color:var(--emerald); direction:rtl;
+  `;
+  input.onclick = e => e.stopPropagation();
+  input.onkeydown = e => {
+    if(e.key === 'Enter') { saveCellEdit(r, col, input.value); }
+    if(e.key === 'Escape') { closeInlineEdit(r, col); }
+  };
+  input.onblur = () => { setTimeout(() => saveCellEdit(r, col, input.value), 150); };
+  cell.appendChild(input);
+  input.focus(); input.select();
+}
+
+function saveCellEdit(r, col, val) {
+  const trimmed = val.trim().slice(0,2) || CW_GRID[r][col];
+  CW_GRID[r][col] = trimmed;
+  editingCell = null;
+  const cell = document.getElementById(`gedit-${r}-${col}`);
+  if(cell) {
+    cell.innerHTML = trimmed;
+    cell.style.background = 'rgba(26,107,74,0.06)';
+    cell.style.borderColor = 'var(--emerald)';
+    setTimeout(()=>{ if(cell){ cell.style.background='#fff'; cell.style.borderColor='#ddd'; } }, 800);
+  }
+}
+
+function closeInlineEdit(r, col) {
+  const cell = document.getElementById(`gedit-${r}-${col}`);
+  if(cell) {
+    cell.innerHTML = CW_GRID[r][col];
+    cell.style.background = '#fff'; cell.style.borderColor = '#ddd';
+  }
+  editingCell = null;
+}
+
+const CW_GRID_ORIGINAL = [
+  ['ة','ي','د','و','ع','س','ل','ا'],
+  ['ا','ن','ي','ي','ف','س','ا','ح'],
+  ['ج','ك','ع','ه','م','ج','ل','ت'],
+  ['ا','د','غ','ب','ق','ب','ن','ي'],
+  ['ن','ظ','ح','ض','ر','ت','ف','ا'],
+  ['ي','س','ز','خ','م','ص','ط','ط'],
+  ['ف','ي','و','ك','ب','ل','ث','ي'],
+  ['ت','ش','ذ','ر','د','ا','غ','ع'],
+];
+
+function saveGridEdit() {
+  // Grid is already updated live in CW_GRID
+  showNotif('✅ تم حفظ الشبكة — ستظهر التغييرات في اللعبة فوراً');
+}
+
+function resetGrid() {
+  if(!confirm('إعادة الشبكة للأصل؟ ستُفقد جميع التعديلات.')) return;
+  CW_GRID_ORIGINAL.forEach((row, r) => row.forEach((letter, c) => { CW_GRID[r][c] = letter; }));
+  renderGridEditor();
+  showNotif('↺ تمت إعادة الشبكة الأصلية');
+}
+
+function saveCwQ(qId) {
+  const q = crosswordQuestions.find(q=>q.id===qId);
+  if(!q) return;
+  const clueEl = document.getElementById('ec-clue-'+qId);
+  const ansEl = document.getElementById('ec-ans-'+qId);
+  if(clueEl) q.clue = clueEl.value;
+  if(ansEl) q.answer = ansEl.value.trim();
+  showNotif('✅ تم حفظ السؤال');
+}
+
+function deleteCwQ(qId) {
+  if(!confirm('حذف هذا السؤال؟')) return;
+  crosswordQuestions = crosswordQuestions.filter(q=>q.id!==qId);
+  renderEditCw();
+  showNotif('🗑 تم الحذف');
+}
+let cwNextId=300;
+function addCwQ() {
+  crosswordQuestions.push({id:'c'+cwNextId++, num:'؟', clue:'اكتب السؤال هنا', options:['الخيار الأول','الخيار الثاني','الخيار الثالث','الخيار الرابع'], answer:0});
+  renderEditCw();
+  showNotif('➕ تم إضافة سؤال');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderQuiz();
+renderEditMissing();
+
+</script>
+</body>
+</html>
